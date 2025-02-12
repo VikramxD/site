@@ -1,0 +1,9 @@
+[
+  {
+    "id": "open-sourcing-pi0",
+    "title": "Opensourcing π₀",
+    "date": "February 4, 2025",
+    "preview": "We are releasing the weights and code for π₀ as well as our new π₀-FAST autoregressive model.",
+    "content": "\nWe're excited to announce that we're open-sourcing π₀, our foundational model for robotic control. This release includes:\n\n## Model Architecture\n\nThe architecture consists of:\n\n```python\nclass Pi0(nn.Module):\n    def __init__(self):\n        self.encoder = VisionTransformer()\n        self.policy_head = PolicyMLP()\n```\n\n## Performance Metrics\n\nOur model achieves state-of-the-art performance on standard benchmarks:\n\n| Metric | Score |\n|--------|-------|\n| Success Rate | 95.2% |\n| Planning Time | 12ms |\n\n## LaTeX Example\n\nThe policy can be described by the equation:\n\n$$\n\\pi_\\theta(a_t|s_t) = \\text{softmax}(f_\\theta(s_t))\n$$\n\nWhere $f_\\theta$ represents our neural network parameterized by $\\theta$. "
+  }
+]

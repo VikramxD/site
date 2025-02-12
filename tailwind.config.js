@@ -10,11 +10,14 @@ export default {
       maxWidth: {
         'content': '650px',
       },
+      backgroundColor: {
+        dark: '#000000'
+      },
       colors: {
         dark: {
           900: '#000000', // OLED black
-          800: '#121212',
-          700: '#1E1E1E',
+          800: '#000000',
+          700: '#000000',
           600: '#2D2D2D',
           500: '#3D3D3D',
           400: '#4D4D4D',
