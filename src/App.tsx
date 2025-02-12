@@ -52,7 +52,7 @@ function App() {
         <main className="container flex-grow">
           <div className="mb-16 max-w-[650px]">
             <p className="text-[15px] leading-[1.6] text-gray-900 dark:text-gray-100 mb-4">
-              Hi, I'm Vikram! I am Machine Learning Operations Engineer.
+              Hi, I'm Vikram! I am a Machine Learning Operations Engineer.
             </p>
             <p className="text-[15px] leading-[1.6] text-gray-600 dark:text-gray-300 mb-6">
               I work at the intersection of Machine Learning and production systems, specializing in Computer Vision, Diffusion Models, and scaling AI solutions for real-world users. After cutting my teeth at early-stage startups, I'm now focused on building systems that are robust, scalable, and ready for production chaos.
