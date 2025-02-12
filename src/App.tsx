@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import BlogPost from './components/BlogPost';
 import Header from './components/Header';
+import Footer from './components/Footer';
 import { BlogPostPage } from './components/BlogPostPage';
 import { getAllPosts, Post } from './utils/posts';
 
@@ -45,10 +46,10 @@ function App() {
 
   return (
     <Router>
-      <div className="min-h-screen bg-white dark:bg-black">
+      <div className="min-h-screen flex flex-col bg-white dark:bg-black">
         <Header theme={theme} setTheme={setTheme} />
         
-        <main className="container">
+        <main className="container flex-grow">
           <div className="mb-16 max-w-[650px]">
             <p className="text-[15px] leading-[1.6] text-gray-900 dark:text-gray-100 mb-4">
               Hi, I'm Vikram! 👋
@@ -89,6 +90,8 @@ function App() {
             </Routes>
           </div>
         </main>
+
+        <Footer />
       </div>
     </Router>
   );

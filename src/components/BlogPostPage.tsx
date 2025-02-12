@@ -7,6 +7,7 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import 'katex/dist/katex.min.css';
 import { useParams, Link } from 'react-router-dom';
+import { TableOfContents } from './TableOfContents';
 
 interface BlogPostPageProps {
   posts: {
@@ -45,11 +46,24 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ posts }) => {
           <h1 className="text-3xl font-extrabold mb-2 tracking-tight">{post.title}</h1>
           <time className="text-gray-500 dark:text-gray-400">{post.date}</time>
         </header>
+
+        <div className="mb-8">
+          <TableOfContents content={processedContent} />
+        </div>
+
         <div className="prose dark:prose-invert max-w-none">
           <ReactMarkdown
             remarkPlugins={[remarkMath, remarkGfm]}
             rehypePlugins={[rehypeKatex]}
             components={{
+              h2: ({ node, children, ...props }) => {
+                const id = `heading-${props.index || 0}`;
+                return <h2 id={id} {...props}>{children}</h2>;
+              },
+              h3: ({ node, children, ...props }) => {
+                const id = `heading-${props.index || 0}`;
+                return <h3 id={id} {...props}>{children}</h3>;
+              },
               code({node, inline, className, children, ...props}) {
                 const match = /language-(\w+)/.exec(className || '');
                 const language = match ? match[1] : '';
