@@ -18,6 +18,8 @@ interface BlogPostPageProps {
   }[];
 }
 
+let headingIndex = 0;
+
 export const BlogPostPage: React.FC<BlogPostPageProps> = ({ posts }) => {
   const { id } = useParams();
   const post = posts.find(p => p.id === id);
@@ -25,6 +27,9 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ posts }) => {
   if (!post) {
     return <div>Post not found</div>;
   }
+
+  // Reset heading index for each render
+  headingIndex = 0;
 
   // Process the content to remove frontmatter and title
   const processedContent = post.content
@@ -56,19 +61,19 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ posts }) => {
             remarkPlugins={[remarkMath, remarkGfm]}
             rehypePlugins={[rehypeKatex]}
             components={{
-              h2: ({ node, children, ...props }) => {
-                const id = `heading-${props.index || 0}`;
-                return <h2 id={id} {...props}>{children}</h2>;
+              h2: ({ children }) => {
+                const id = `heading-${headingIndex++}`;
+                return <h2 id={id}>{children}</h2>;
               },
-              h3: ({ node, children, ...props }) => {
-                const id = `heading-${props.index || 0}`;
-                return <h3 id={id} {...props}>{children}</h3>;
+              h3: ({ children }) => {
+                const id = `heading-${headingIndex++}`;
+                return <h3 id={id}>{children}</h3>;
               },
-              code({node, inline, className, children, ...props}) {
+              code({ className, children }) {
                 const match = /language-(\w+)/.exec(className || '');
                 const language = match ? match[1] : '';
                 
-                if (!inline && language) {
+                if (className) {
                   return (
                     <SyntaxHighlighter
                       style={oneDark}
@@ -79,13 +84,12 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ posts }) => {
                         borderRadius: '0.375rem',
                         background: '#1a1a1a'
                       }}
-                      {...props}
                     >
                       {String(children).replace(/\n$/, '')}
                     </SyntaxHighlighter>
                   );
                 }
-                return <code className={className} {...props}>{children}</code>;
+                return <code className={className}>{children}</code>;
               }
             }}
           >

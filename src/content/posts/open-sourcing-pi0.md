@@ -1,5 +1,5 @@
 ---
-title: "Opensourcing π₀"
+title: "K8s For the Uninitiated ML Engineer"
 date: "2025-02-04"
 preview: "We are releasing the weights and code for π₀ as well as our new π₀-FAST autoregressive model."
 ---
