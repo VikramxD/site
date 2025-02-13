@@ -14,7 +14,7 @@ const BlogPost = ({ title, date, preview, isNew }: BlogPostProps) => {
       <div>
         <div className="flex items-center gap-2 mb-2">
           {isNew && (
-            <span className="text-[13px] font-normal text-green-500 dark:text-green-400">
+            <span className="text-[12px] font-medium bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 px-2 py-0.5 rounded">
               New
             </span>
           )}

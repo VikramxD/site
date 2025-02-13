@@ -1,10 +1,12 @@
 ---
 title: "K8s For the Uninitiated ML Engineer"
 date: "2025-02-04"
-preview: "We are releasing the weights and code for π₀ as well as our new π₀-FAST autoregressive model."
+preview: "A guide to deploying ML models in Kubernetes"
+email: "vikram@playjump.ai"
+repo: "https://github.com/VikramxD/Saka"
 ---
 
-We're excited to announce that we're open-sourcing π₀, our foundational model for robotic control. This release includes:
+We're excited to announce that we're open-sourcing π₀, our foundational model for robotic control. This release includes: 
 
 ## Model Architecture
 

@@ -39,6 +39,8 @@ function generatePosts() {
         date,
         preview: matterResult.data.preview,
         content: matterResult.content,
+        email: matterResult.data.email,
+        repo: matterResult.data.repo,
       };
     });
 

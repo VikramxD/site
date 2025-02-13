@@ -6,6 +6,8 @@ export interface Post {
   date: string;
   preview: string;
   content: string;
+  email?: string;
+  repo?: string;
   isNew?: boolean;
 }
 

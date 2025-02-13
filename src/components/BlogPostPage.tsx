@@ -7,7 +7,6 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import 'katex/dist/katex.min.css';
 import { useParams, Link } from 'react-router-dom';
-import { TableOfContents } from './TableOfContents';
 import CopyButton from './CopyButton';
 
 interface BlogPostPageProps {
@@ -16,10 +15,10 @@ interface BlogPostPageProps {
     title: string;
     date: string;
     content: string;
+    email?: string;
+    repo?: string;
   }[];
 }
-
-let headingIndex = 0;
 
 export const BlogPostPage: React.FC<BlogPostPageProps> = ({ posts }) => {
   const { id } = useParams();
@@ -28,9 +27,6 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ posts }) => {
   if (!post) {
     return <div>Post not found</div>;
   }
-
-  // Reset heading index for each render
-  headingIndex = 0;
 
   // Process the content to remove frontmatter and title
   const processedContent = post.content
@@ -48,28 +44,40 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ posts }) => {
       </Link>
       
       <article>
-        <header className="mb-8">
-          <h1 className="text-3xl font-extrabold mb-2 tracking-tight">{post.title}</h1>
-          <time className="text-gray-500 dark:text-gray-400">{post.date}</time>
+        <header className="mb-12">
+          <h1 className="text-3xl font-extrabold mb-8 tracking-tight">{post.title}</h1>
+          <div className="space-y-2 font-mono text-[13px]">
+            <div className="flex">
+              <div className="w-32 text-gray-500 dark:text-gray-400">Published</div>
+              <div>{post.date}</div>
+            </div>
+            {post.email && (
+              <div className="flex">
+                <div className="w-32 text-gray-500 dark:text-gray-400">Email</div>
+                <a href={`mailto:${post.email}`} className="border-b border-dotted border-gray-500 hover:border-gray-900 dark:hover:border-gray-100">
+                  {post.email}
+                </a>
+              </div>
+            )}
+            {post.repo && (
+              <div className="flex">
+                <div className="w-32 text-gray-500 dark:text-gray-400">Repo</div>
+                <a href={post.repo.startsWith('http') ? post.repo : `https://github.com/${post.repo}`} 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   className="border-b border-dotted border-gray-500 hover:border-gray-900 dark:hover:border-gray-100">
+                  {post.repo}
+                </a>
+              </div>
+            )}
+          </div>
         </header>
-
-        <div className="mb-8">
-          <TableOfContents content={processedContent} />
-        </div>
 
         <div className="prose dark:prose-invert max-w-none">
           <ReactMarkdown
             remarkPlugins={[remarkMath, remarkGfm]}
             rehypePlugins={[rehypeKatex]}
             components={{
-              h2: ({ children }) => {
-                const id = `heading-${headingIndex++}`;
-                return <h2 id={id}>{children}</h2>;
-              },
-              h3: ({ children }) => {
-                const id = `heading-${headingIndex++}`;
-                return <h3 id={id}>{children}</h3>;
-              },
               code({ className, children }) {
                 const match = /language-(\w+)/.exec(className || '');
                 const language = match ? match[1] : '';
