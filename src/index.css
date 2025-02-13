@@ -199,3 +199,16 @@
 .prose table td {
   @apply px-4 py-2 border dark:border-gray-700;
 }
+
+/* Heading Anchor Links */
+.anchor-link {
+  @apply opacity-0 ml-2 text-gray-400 dark:text-gray-600 hover:text-gray-600 dark:hover:text-gray-400;
+}
+
+.group:hover .anchor-link {
+  @apply opacity-100;
+}
+
+h2, h3 {
+  scroll-margin-top: 100px;
+}
