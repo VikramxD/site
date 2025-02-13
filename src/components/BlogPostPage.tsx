@@ -8,6 +8,7 @@ import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import 'katex/dist/katex.min.css';
 import { useParams, Link } from 'react-router-dom';
 import { TableOfContents } from './TableOfContents';
+import CopyButton from './CopyButton';
 
 interface BlogPostPageProps {
   posts: {
@@ -72,21 +73,25 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ posts }) => {
               code({ className, children }) {
                 const match = /language-(\w+)/.exec(className || '');
                 const language = match ? match[1] : '';
+                const codeString = String(children).replace(/\n$/, '');
                 
                 if (className) {
                   return (
-                    <SyntaxHighlighter
-                      style={oneDark}
-                      language={language}
-                      PreTag="div"
-                      customStyle={{
-                        margin: '1.5em 0',
-                        borderRadius: '0.375rem',
-                        background: '#1a1a1a'
-                      }}
-                    >
-                      {String(children).replace(/\n$/, '')}
-                    </SyntaxHighlighter>
+                    <div className="relative">
+                      <SyntaxHighlighter
+                        style={oneDark}
+                        language={language}
+                        PreTag="div"
+                        customStyle={{
+                          margin: '1.5em 0',
+                          borderRadius: '0.375rem',
+                          background: '#1a1a1a'
+                        }}
+                      >
+                        {codeString}
+                      </SyntaxHighlighter>
+                      <CopyButton code={codeString} />
+                    </div>
                   );
                 }
                 return <code className={className}>{children}</code>;
