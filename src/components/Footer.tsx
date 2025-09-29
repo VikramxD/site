@@ -1,40 +1,32 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Github, FileText } from 'lucide-react';
-import XIcon from './XIcon';
+const navigationLinks = [
+  { label: 'Home', to: '/' },
+  { label: 'Blogs', to: '/blogs' },
+];
 
 const Footer: React.FC = () => {
   return (
-    <footer className="container py-8 mt-16 border-t border-gray-200 dark:border-gray-800">
-      <nav className="flex items-center justify-between">
-        <Link to="/" className="text-[15px] font-normal">
-          Applied Mode (△)
+    <footer className="mt-16 bg-white text-slate-900 dark:bg-black dark:text-slate-100">
+      <div className="mx-auto flex w-full max-w-5xl flex-col gap-6 px-6 py-8 sm:flex-row sm:items-center sm:justify-between">
+        <Link to="/" className="text-sm font-semibold uppercase tracking-[0.35em]">
+          Applied Mode
         </Link>
-        
-        <div className="flex items-center gap-6">
-          <a href="https://docs.google.com/document/d/1A8KGNkAtYyi4zIxSFWQ_mwBqhbXn8Pu_qbSNzDHwaws/edit?tab=t.0" 
-             target="_blank" 
-             rel="noopener noreferrer" 
-             className="nav-link"
-             aria-label="Resume">
-            <FileText size={14} />
-          </a>
-          <a href="https://github.com/VikramxD" 
-             target="_blank" 
-             rel="noopener noreferrer" 
-             className="nav-link"
-             aria-label="GitHub">
-            <Github size={14} />
-          </a>
-          <a href="https://x.com/V_J_S_1" 
-             target="_blank" 
-             rel="noopener noreferrer" 
-             className="nav-link"
-             aria-label="X">
-            <XIcon size={14} />
-          </a>
-        </div>
-      </nav>
+        <nav>
+          <ul className="flex flex-wrap items-center gap-4 text-sm">
+            {navigationLinks.map((item) => (
+              <li key={item.label}>
+                <Link
+                  to={item.to}
+                  className="transition-colors hover:text-blue-600 dark:hover:text-blue-400"
+                >
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
     </footer>
   );
 };

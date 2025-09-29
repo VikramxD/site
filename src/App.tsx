@@ -1,28 +1,39 @@
-import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Header from './components/Header';
-import Footer from './components/Footer';
 import HomePage from './components/HomePage';
+import BlogsPage from './components/BlogsPage';
 import { BlogPostPage } from './components/BlogPostPage';
+import MainLayout from './components/MainLayout';
 import { getAllPosts, Post } from './utils/posts';
+import { useEffect, useState } from 'react';
 
 function App() {
-  const [theme, setTheme] = useState<'light' | 'dark'>('dark');
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    if (typeof window === 'undefined') {
+      return 'dark';
+    }
+
+    const stored = window.localStorage.getItem('theme');
+    if (stored === 'light' || stored === 'dark') {
+      return stored;
+    }
+
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'dark'
+      : 'light';
+  });
   const [posts, setPosts] = useState<Post[]>([]);
   const [lastUpdate, setLastUpdate] = useState(Date.now());
 
   useEffect(() => {
+    const root = document.documentElement;
     if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
+      root.classList.add('dark');
+      window.localStorage.setItem('theme', 'dark');
     } else {
-      document.documentElement.classList.remove('dark');
+      root.classList.remove('dark');
+      window.localStorage.setItem('theme', 'light');
     }
   }, [theme]);
-
-  // Add initial dark mode setup
-  useEffect(() => {
-    document.documentElement.classList.add('dark');
-  }, []);
 
   useEffect(() => {
     // Load posts
@@ -46,16 +57,20 @@ function App() {
 
   return (
     <Router>
-      <div className="min-h-screen flex flex-col bg-white dark:bg-black">
-        <Header theme={theme} setTheme={setTheme} />
-        
-        <Routes>
-          <Route path="/" element={<HomePage posts={posts} />} />
-          <Route path="/blog/:id" element={<BlogPostPage posts={posts} />} />
-        </Routes>
-
-        <Footer />
-      </div>
+      <Routes>
+        <Route
+          path="/"
+          element={<MainLayout theme={theme} setTheme={setTheme} posts={posts} Component={HomePage} showFooter />}
+        />
+        <Route
+          path="/blogs"
+          element={<MainLayout theme={theme} setTheme={setTheme} posts={posts} Component={BlogsPage} />}
+        />
+        <Route
+          path="/blog/:id"
+          element={<MainLayout theme={theme} setTheme={setTheme} posts={posts} Component={BlogPostPage} />}
+        />
+      </Routes>
     </Router>
   );
 }

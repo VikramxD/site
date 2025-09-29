@@ -48,13 +48,13 @@ const BlogEditor: React.FC<BlogEditorProps> = ({ onSave }) => {
       <div className="flex gap-4 mb-4">
         <button
           onClick={() => setIsPreview(false)}
-          className={`px-4 py-2 text-[13px] ${!isPreview ? 'text-yellow-400 border-b-2 border-yellow-400' : 'text-gray-600 dark:text-gray-400'}`}
+          className={`px-4 py-2 text-[13px] ${!isPreview ? 'text-yellow-400 border-b-2 border-yellow-400' : 'text-slate-600 dark:text-slate-400'}`}
         >
           Edit
         </button>
         <button
           onClick={() => setIsPreview(true)}
-          className={`px-4 py-2 text-[13px] ${isPreview ? 'text-yellow-400 border-b-2 border-yellow-400' : 'text-gray-600 dark:text-gray-400'}`}
+          className={`px-4 py-2 text-[13px] ${isPreview ? 'text-yellow-400 border-b-2 border-yellow-400' : 'text-slate-600 dark:text-slate-400'}`}
         >
           Preview
         </button>
